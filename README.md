@@ -359,5 +359,3 @@ In accordance with academic scope and engineering constraints:
 *For educational, research, and legal literacy purposes.*
 
 </div>
-#   N y a y a S a h a y a k  
- 

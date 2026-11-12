@@ -1,0 +1,98 @@
+{% extends 'base.html' %}
+
+{% block title %}Query Record - NyayaSahayak{% endblock %}
+
+{% block content %}
+<div class="container py-3">
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            <div class="mb-3 d-flex justify-content-between align-items-center">
+                <a href="{% url 'history' %}" class="btn btn-outline-secondary btn-sm">
+                    <i class="bi bi-arrow-left me-1"></i> Back to History
+                </a>
+                <span class="text-muted small">Query ID #{{ query_obj.id }} • {{ query_obj.created_at|date:"d M Y, H:i" }}</span>
+            </div>
+
+            <div class="card shadow-sm border-0 mb-4">
+                <div class="card-header bg-white py-3 border-bottom d-flex justify-content-between align-items-center">
+                    <div>
+                        <span class="badge bg-primary-subtle text-primary text-uppercase me-2">{{ query_obj.legal_area }}</span>
+                        {% if query_obj.refused %}
+                            <span class="badge bg-danger-subtle text-danger border border-danger-subtle">Guardrail Refusal</span>
+                        {% else %}
+                            <span class="badge bg-success-subtle text-success border border-success-subtle">{{ query_obj.confidence_label }} Confidence ({{ query_obj.top_score|floatformat:2 }})</span>
+                        {% endif %}
+                    </div>
+                    <span class="text-muted small"><i class="bi bi-stopwatch me-1"></i>{{ query_obj.latency_ms }} ms</span>
+                </div>
+                <div class="card-body p-4">
+                    <h6 class="fw-bold text-muted text-uppercase small mb-2">Citizen Dispute / Question:</h6>
+                    <div class="p-3 bg-light rounded mb-4 border fs-6">
+                        {{ query_obj.question }}
+                    </div>
+
+                    <h6 class="fw-bold text-muted text-uppercase small mb-2">Statutory Analysis:</h6>
+                    {% if query_obj.refused %}
+                        <div class="alert refusal-alert mb-4">
+                            <i class="bi bi-exclamation-octagon-fill me-2"></i>
+                            {{ query_obj.answer }}
+                        </div>
+                    {% else %}
+                        <div class="border rounded p-3 mb-4 bg-white fs-6 lh-base">
+                            {{ query_obj.answer|linebreaks }}
+                        </div>
+                    {% endif %}
+
+                    {% if query_obj.next_steps %}
+                    <div class="p-3 bg-light rounded border mb-4">
+                        <h6 class="fw-bold text-primary mb-2"><i class="bi bi-list-check me-1"></i> Recommended Next Steps:</h6>
+                        <ul class="mb-0 ps-3">
+                            {% for step in query_obj.next_steps %}
+                                <li class="text-dark mb-1">{{ step }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    {% endif %}
+
+                    {% if query_obj.citations %}
+                    <h6 class="fw-bold text-secondary mb-2"><i class="bi bi-bookmark-check-fill me-1"></i> Verified Statutory Citations:</h6>
+                    <div class="d-flex flex-wrap gap-2 mb-4">
+                        {% for cite in query_obj.citations %}
+                            <span class="badge bg-light text-dark border p-2 shadow-sm">
+                                <i class="bi bi-book text-primary me-1"></i>
+                                <strong>{{ cite.act }}</strong>, Section {{ cite.section }}
+                                {% if cite.legal_status == 'repealed' %}
+                                    <span class="badge bg-secondary ms-1">Repealed</span>
+                                {% else %}
+                                    <span class="badge bg-success ms-1">In Force</span>
+                                {% endif %}
+                            </span>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+
+                    {% if retrieved_chunks %}
+                    <h6 class="fw-bold text-secondary mb-2"><i class="bi bi-file-earmark-ruled me-1"></i> Retrieved Statutory Text Chunks:</h6>
+                    <div class="accordion" id="chunkAccordion">
+                        {% for chunk in retrieved_chunks %}
+                        <div class="accordion-item mb-2 border rounded">
+                            <h2 class="accordion-header" id="heading-{{ forloop.counter }}">
+                                <button class="accordion-button collapsed py-2" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-{{ forloop.counter }}">
+                                    <strong class="me-2">{{ chunk.act_name }}</strong> § {{ chunk.section_number }}: {{ chunk.section_title }}
+                                </button>
+                            </h2>
+                            <div id="collapse-{{ forloop.counter }}" class="accordion-collapse collapse" data-bs-parent="#chunkAccordion">
+                                <div class="accordion-body small bg-light font-monospace" style="white-space: pre-wrap;">
+{{ chunk.text }}
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

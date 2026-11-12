@@ -1,0 +1,627 @@
+[
+  {
+    "model": "evaluation.evalquestion",
+    "pk": 1,
+    "fields": {
+      "question": "Who qualifies as a consumer under the Consumer Protection Act?",
+      "expected_act": "Consumer Protection Act, 2019",
+      "expected_section": "2(7)",
+      "should_refuse": false,
+      "legal_area": "consumer",
+      "expects_repealed_allowed": false,
+      "needs_verification": false
+    }
+  },
+  {
+    "model": "evaluation.evalquestion",
+    "pk": 2,
+    "fields": {
+      "question": "What is considered a defect in goods under consumer law?",
+      "expected_act": "Consumer Protection Act, 2019",
+      "expected_section": "2(10)",
+      "should_refuse": false,
+      "legal_area": "consumer",
+      "expects_repealed_allowed": false,
+      "needs_verification": false
+    }
+  },
+  {
+    "model": "evaluation.evalquestion",
+    "pk": 3,
+    "fields": {
+      "question": "What constitutes deficiency of service under the Consumer Protection Act?",
+      "expected_act": "Consumer Protection Act, 2019",
+      "expected_section": "2(11)",
+      "should_refuse": false,
+      "legal_area": "consumer",
+      "expects_repealed_allowed": false,
+      "needs_verification": false
+    }
+  },
+  {
+    "model": "evaluation.evalquestion",
+    "pk": 4,
+    "fields": {
+      "question": "What actions are classified as unfair trade practices?",
+      "expected_act": "Consumer Protection Act, 2019",
+      "expected_section": "2(47)",
+      "should_refuse": false,
+      "legal_area": "consumer",
+      "expects_repealed_allowed": false,
+      "needs_verification": false
+    }
+  },
+  {
+    "model": "evaluation.evalquestion",
+    "pk": 5,
+    "fields": {
+      "question": "What is the monetary jurisdiction of the District Consumer Commission?",
+      "expected_act": "Consumer Protection Act, 2019",
+      "expected_section": "34",
+      "should_refuse": false,
+      "legal_area": "consumer",
+      "expects_repealed_allowed": false,
+      "needs_verification": false
+    }
+  },
+  {
+    "model": "evaluation.evalquestion",
+    "pk": 6,
+    "fields": {
+      "question": "How can a consumer file a complaint before the District Commission?",
+      "expected_act": "Consumer Protection Act, 2019",
+      "expected_section": "35",
+      "should_refuse": false,
+      "legal_area": "consumer",
+      "expects_repealed_allowed": false,
+      "needs_verification": false
+    }
+  },
+  {
+    "model": "evaluation.evalquestion",
+    "pk": 7,
+    "fields": {
+      "question": "Can consumer disputes be referred to mediation?",
+      "expected_act": "Consumer Protection Act, 2019",
+      "expected_section": "37",
+      "should_refuse": false,
+      "legal_area": "consumer",
+      "expects_repealed_allowed": false,
+      "needs_verification": false
+    }
+  },
+  {
+    "model": "evaluation.evalquestion",
+    "pk": 8,
+    "fields": {
+      "question": "What is product liability for harm caused by a defective product?",
+      "expected_act": "Consumer Protection Act, 2019",
+      "expected_section": "84",
+      "should_refuse": false,
+      "legal_area": "consumer",
+      "expects_repealed_allowed": false,
+      "needs_verification": false
+    }
+  },
+  {
+    "model": "evaluation.evalquestion",
+    "pk": 9,
+    "fields": {
+      "question": "What are the penalties for misleading advertisements under CPA 2019?",
+      "expected_act": "Consumer Protection Act, 2019",
+      "expected_section": "89",
+      "should_refuse": false,
+      "legal_area": "consumer",
+      "expects_repealed_allowed": false,
+      "needs_verification": false
+    }
+  },
+  {
+    "model": "evaluation.evalquestion",
+    "pk": 10,
+    "fields": {
+      "question": "Can Central Authority order recall of goods dangerous to consumers?",
+      "expected_act": "Consumer Protection Act, 2019",
+      "expected_section": "20",
+      "should_refuse": false,
+      "legal_area": "consumer",
+      "expects_repealed_allowed": false,
+      "needs_verification": false
+    }
+  },
+  {
+    "model": "evaluation.evalquestion",
+    "pk": 11,
+    "fields": {
+      "question": "What is the penalty for filing a frivolous or vexatious consumer complaint?",
+      "expected_act": "Consumer Protection Act, 2019",
+      "expected_section": "TODO",
+      "should_refuse": false,
+      "legal_area": "consumer",
+      "expects_repealed_allowed": false,
+      "needs_verification": true
+    }
+  },
+  {
+    "model": "evaluation.evalquestion",
+    "pk": 12,
+    "fields": {
+      "question": "Is a written tenancy agreement mandatory under the Model Tenancy Act?",
+      "expected_act": "Model Tenancy Act, 2021",
+      "expected_section": "4",
+      "should_refuse": false,
+      "legal_area": "tenancy",
+      "expects_repealed_allowed": false,
+      "needs_verification": false
+    }
+  },
+  {
+    "model": "evaluation.evalquestion",
+    "pk": 13,
+    "fields": {
+      "question": "What is the maximum security deposit allowed for residential premises?",
+      "expected_act": "Model Tenancy Act, 2021",
+      "expected_section": "11",
+      "should_refuse": false,
+      "legal_area": "tenancy",
+      "expects_repealed_allowed": false,
+      "needs_verification": false
+    }
+  },
+  {
+    "model": "evaluation.evalquestion",
+    "pk": 14,
+    "fields": {
+      "question": "When must the landlord refund the security deposit to the tenant?",
+      "expected_act": "Model Tenancy Act, 2021",
+      "expected_section": "11",
+      "should_refuse": false,
+      "legal_area": "tenancy",
+      "expects_repealed_allowed": false,
+      "needs_verification": false
+    }
+  },
+  {
+    "model": "evaluation.evalquestion",
+    "pk": 15,
+    "fields": {
+      "question": "Can the landlord increase rent without prior notice to the tenant?",
+      "expected_act": "Model Tenancy Act, 2021",
+      "expected_section": "9",
+      "should_refuse": false,
+      "legal_area": "tenancy",
+      "expects_repealed_allowed": false,
+      "needs_verification": false
+    }
+  },
+  {
+    "model": "evaluation.evalquestion",
+    "pk": 16,
+    "fields": {
+      "question": "Who is responsible for structural repairs under tenancy law?",
+      "expected_act": "Model Tenancy Act, 2021",
+      "expected_section": "15",
+      "should_refuse": false,
+      "legal_area": "tenancy",
+      "expects_repealed_allowed": false,
+      "needs_verification": false
+    }
+  },
+  {
+    "model": "evaluation.evalquestion",
+    "pk": 17,
+    "fields": {
+      "question": "How much advance notice must a landlord give before entering the tenant premises?",
+      "expected_act": "Model Tenancy Act, 2021",
+      "expected_section": "17",
+      "should_refuse": false,
+      "legal_area": "tenancy",
+      "expects_repealed_allowed": false,
+      "needs_verification": false
+    }
+  },
+  {
+    "model": "evaluation.evalquestion",
+    "pk": 18,
+    "fields": {
+      "question": "Can a landlord cut off electricity or water supply to the tenant?",
+      "expected_act": "Model Tenancy Act, 2021",
+      "expected_section": "20",
+      "should_refuse": false,
+      "legal_area": "tenancy",
+      "expects_repealed_allowed": false,
+      "needs_verification": false
+    }
+  },
+  {
+    "model": "evaluation.evalquestion",
+    "pk": 19,
+    "fields": {
+      "question": "What compensation is payable if a tenant refuses to vacate after tenancy expires?",
+      "expected_act": "Model Tenancy Act, 2021",
+      "expected_section": "23",
+      "should_refuse": false,
+      "legal_area": "tenancy",
+      "expects_repealed_allowed": false,
+      "needs_verification": false
+    }
+  },
+  {
+    "model": "evaluation.evalquestion",
+    "pk": 20,
+    "fields": {
+      "question": "On what grounds can a landlord apply for eviction of a tenant?",
+      "expected_act": "Model Tenancy Act, 2021",
+      "expected_section": "21",
+      "should_refuse": false,
+      "legal_area": "tenancy",
+      "expects_repealed_allowed": false,
+      "needs_verification": false
+    }
+  },
+  {
+    "model": "evaluation.evalquestion",
+    "pk": 21,
+    "fields": {
+      "question": "How does the Rent Authority decide disputes regarding tenancy agreements?",
+      "expected_act": "Model Tenancy Act, 2021",
+      "expected_section": "30",
+      "should_refuse": false,
+      "legal_area": "tenancy",
+      "expects_repealed_allowed": false,
+      "needs_verification": false
+    }
+  },
+  {
+    "model": "evaluation.evalquestion",
+    "pk": 22,
+    "fields": {
+      "question": "What is the procedure for depositing rent with the Rent Authority when landlord refuses receipt?",
+      "expected_act": "Model Tenancy Act, 2021",
+      "expected_section": "14",
+      "should_refuse": false,
+      "legal_area": "tenancy",
+      "expects_repealed_allowed": false,
+      "needs_verification": false
+    }
+  },
+  {
+    "model": "evaluation.evalquestion",
+    "pk": 23,
+    "fields": {
+      "question": "What is the statutory definition of wages under the Code on Wages, 2019?",
+      "expected_act": "Code on Wages, 2019",
+      "expected_section": "2(y)",
+      "should_refuse": false,
+      "legal_area": "labour",
+      "expects_repealed_allowed": false,
+      "needs_verification": false
+    }
+  },
+  {
+    "model": "evaluation.evalquestion",
+    "pk": 24,
+    "fields": {
+      "question": "How are minimum rates of wages fixed by the government?",
+      "expected_act": "Code on Wages, 2019",
+      "expected_section": "6",
+      "should_refuse": false,
+      "legal_area": "labour",
+      "expects_repealed_allowed": false,
+      "needs_verification": false
+    }
+  },
+  {
+    "model": "evaluation.evalquestion",
+    "pk": 25,
+    "fields": {
+      "question": "What is the statutory overtime wage rate for working beyond normal working hours?",
+      "expected_act": "Code on Wages, 2019",
+      "expected_section": "14",
+      "should_refuse": false,
+      "legal_area": "labour",
+      "expects_repealed_allowed": false,
+      "needs_verification": false
+    }
+  },
+  {
+    "model": "evaluation.evalquestion",
+    "pk": 26,
+    "fields": {
+      "question": "What is the statutory timeline for payment of monthly wages to employees?",
+      "expected_act": "Code on Wages, 2019",
+      "expected_section": "17",
+      "should_refuse": false,
+      "legal_area": "labour",
+      "expects_repealed_allowed": false,
+      "needs_verification": false
+    }
+  },
+  {
+    "model": "evaluation.evalquestion",
+    "pk": 27,
+    "fields": {
+      "question": "What deductions are legally permissible from employee wages?",
+      "expected_act": "Code on Wages, 2019",
+      "expected_section": "18",
+      "should_refuse": false,
+      "legal_area": "labour",
+      "expects_repealed_allowed": false,
+      "needs_verification": false
+    }
+  },
+  {
+    "model": "evaluation.evalquestion",
+    "pk": 28,
+    "fields": {
+      "question": "Can an employer impose fines on employees, and what are the conditions?",
+      "expected_act": "Code on Wages, 2019",
+      "expected_section": "19",
+      "should_refuse": false,
+      "legal_area": "labour",
+      "expects_repealed_allowed": false,
+      "needs_verification": false
+    }
+  },
+  {
+    "model": "evaluation.evalquestion",
+    "pk": 29,
+    "fields": {
+      "question": "What deductions can be made for damage or loss of employer goods?",
+      "expected_act": "Code on Wages, 2019",
+      "expected_section": "21",
+      "should_refuse": false,
+      "legal_area": "labour",
+      "expects_repealed_allowed": false,
+      "needs_verification": false
+    }
+  },
+  {
+    "model": "evaluation.evalquestion",
+    "pk": 30,
+    "fields": {
+      "question": "What is the maximum limit of deductions that can be made from monthly wages?",
+      "expected_act": "Code on Wages, 2019",
+      "expected_section": "18(3)",
+      "should_refuse": false,
+      "legal_area": "labour",
+      "expects_repealed_allowed": false,
+      "needs_verification": false
+    }
+  },
+  {
+    "model": "evaluation.evalquestion",
+    "pk": 31,
+    "fields": {
+      "question": "How can an employee file a claim for recovery of unpaid wages?",
+      "expected_act": "Code on Wages, 2019",
+      "expected_section": "45",
+      "should_refuse": false,
+      "legal_area": "labour",
+      "expects_repealed_allowed": false,
+      "needs_verification": false
+    }
+  },
+  {
+    "model": "evaluation.evalquestion",
+    "pk": 32,
+    "fields": {
+      "question": "What are the powers of an Inspector-cum-Facilitator under the wage code?",
+      "expected_act": "Code on Wages, 2019",
+      "expected_section": "51",
+      "should_refuse": false,
+      "legal_area": "labour",
+      "expects_repealed_allowed": false,
+      "needs_verification": false
+    }
+  },
+  {
+    "model": "evaluation.evalquestion",
+    "pk": 33,
+    "fields": {
+      "question": "How to register a First Information Report (FIR) for theft at police station?",
+      "expected_act": "",
+      "expected_section": "",
+      "should_refuse": true,
+      "legal_area": "unrelated",
+      "expects_repealed_allowed": false,
+      "needs_verification": false
+    }
+  },
+  {
+    "model": "evaluation.evalquestion",
+    "pk": 34,
+    "fields": {
+      "question": "What are the grounds for obtaining regular bail in a criminal murder case under CrPC?",
+      "expected_act": "",
+      "expected_section": "",
+      "should_refuse": true,
+      "legal_area": "unrelated",
+      "expects_repealed_allowed": false,
+      "needs_verification": false
+    }
+  },
+  {
+    "model": "evaluation.evalquestion",
+    "pk": 35,
+    "fields": {
+      "question": "How can spouses obtain mutual consent divorce under the Hindu Marriage Act?",
+      "expected_act": "",
+      "expected_section": "",
+      "should_refuse": true,
+      "legal_area": "unrelated",
+      "expects_repealed_allowed": false,
+      "needs_verification": false
+    }
+  },
+  {
+    "model": "evaluation.evalquestion",
+    "pk": 36,
+    "fields": {
+      "question": "What is the legal procedure for child custody during matrimonial separation?",
+      "expected_act": "",
+      "expected_section": "",
+      "should_refuse": true,
+      "legal_area": "unrelated",
+      "expects_repealed_allowed": false,
+      "needs_verification": false
+    }
+  },
+  {
+    "model": "evaluation.evalquestion",
+    "pk": 37,
+    "fields": {
+      "question": "What is the penalty for possession of commercial quantities of drugs under NDPS Act?",
+      "expected_act": "",
+      "expected_section": "",
+      "should_refuse": true,
+      "legal_area": "unrelated",
+      "expects_repealed_allowed": false,
+      "needs_verification": false
+    }
+  },
+  {
+    "model": "evaluation.evalquestion",
+    "pk": 38,
+    "fields": {
+      "question": "How to file a GST return appeal before the appellate tribunal?",
+      "expected_act": "",
+      "expected_section": "",
+      "should_refuse": true,
+      "legal_area": "unrelated",
+      "expects_repealed_allowed": false,
+      "needs_verification": false
+    }
+  },
+  {
+    "model": "evaluation.evalquestion",
+    "pk": 39,
+    "fields": {
+      "question": "What is the punishment for rash and negligent driving under motor vehicles law?",
+      "expected_act": "",
+      "expected_section": "",
+      "should_refuse": true,
+      "legal_area": "unrelated",
+      "expects_repealed_allowed": false,
+      "needs_verification": false
+    }
+  },
+  {
+    "model": "evaluation.evalquestion",
+    "pk": 40,
+    "fields": {
+      "question": "How to challenge an ancestral property partition deed under succession law?",
+      "expected_act": "",
+      "expected_section": "",
+      "should_refuse": true,
+      "legal_area": "unrelated",
+      "expects_repealed_allowed": false,
+      "needs_verification": false
+    }
+  },
+  {
+    "model": "evaluation.evalquestion",
+    "pk": 41,
+    "fields": {
+      "question": "What is the process to register software copyright with the patent office?",
+      "expected_act": "",
+      "expected_section": "",
+      "should_refuse": true,
+      "legal_area": "unrelated",
+      "expects_repealed_allowed": false,
+      "needs_verification": false
+    }
+  },
+  {
+    "model": "evaluation.evalquestion",
+    "pk": 42,
+    "fields": {
+      "question": "Can police arrest without warrant in non-cognizable cheque bounce cases?",
+      "expected_act": "",
+      "expected_section": "",
+      "should_refuse": true,
+      "legal_area": "unrelated",
+      "expects_repealed_allowed": false,
+      "needs_verification": false
+    }
+  },
+  {
+    "model": "evaluation.evalquestion",
+    "pk": 43,
+    "fields": {
+      "question": "My employer did not pay my monthly salary for November 2026. What does current wage law state?",
+      "expected_act": "Code on Wages, 2019",
+      "expected_section": "17",
+      "should_refuse": false,
+      "legal_area": "labour",
+      "expects_repealed_allowed": false,
+      "needs_verification": false
+    }
+  },
+  {
+    "model": "evaluation.evalquestion",
+    "pk": 44,
+    "fields": {
+      "question": "What is the current legal minimum wage rule for daily wage workers in 2026?",
+      "expected_act": "Code on Wages, 2019",
+      "expected_section": "6",
+      "should_refuse": false,
+      "legal_area": "labour",
+      "expects_repealed_allowed": false,
+      "needs_verification": false
+    }
+  },
+  {
+    "model": "evaluation.evalquestion",
+    "pk": 45,
+    "fields": {
+      "question": "Under current law today, can an employer deduct more than 50 percent of salary for loans?",
+      "expected_act": "Code on Wages, 2019",
+      "expected_section": "18(3)",
+      "should_refuse": false,
+      "legal_area": "labour",
+      "expects_repealed_allowed": false,
+      "needs_verification": false
+    }
+  },
+  {
+    "model": "evaluation.evalquestion",
+    "pk": 46,
+    "fields": {
+      "question": "In 2023, my company made arbitrary wage deductions under the Payment of Wages Act.",
+      "expected_act": "Payment of Wages Act, 1936",
+      "expected_section": "7",
+      "should_refuse": false,
+      "legal_area": "labour",
+      "expects_repealed_allowed": true,
+      "needs_verification": false
+    }
+  },
+  {
+    "model": "evaluation.evalquestion",
+    "pk": 47,
+    "fields": {
+      "question": "Before the new wage code commenced in 2024, what was the claim filing procedure under the 1936 Act?",
+      "expected_act": "Payment of Wages Act, 1936",
+      "expected_section": "15",
+      "should_refuse": false,
+      "legal_area": "labour",
+      "expects_repealed_allowed": true,
+      "needs_verification": false
+    }
+  },
+  {
+    "model": "evaluation.evalquestion",
+    "pk": 48,
+    "fields": {
+      "question": "Is the Payment of Wages Act 1936 currently in force for new wage claims in 2026?",
+      "expected_act": "Code on Wages, 2019",
+      "expected_section": "17",
+      "should_refuse": false,
+      "legal_area": "labour",
+      "expects_repealed_allowed": false,
+      "needs_verification": false
+    }
+  }
+]
+

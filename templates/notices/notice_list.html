@@ -1,0 +1,113 @@
+{% extends 'base.html' %}
+
+{% block title %}Draft Legal Notice - NyayaSahayak{% endblock %}
+
+{% block content %}
+<div class="container py-3">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="fw-bold text-primary mb-1"><i class="bi bi-file-earmark-text-fill me-2"></i>Legal Notice Generator</h2>
+            <p class="text-muted mb-0">Generate formal statutory demand notices backed by Indian legal provisions with PDF export</p>
+        </div>
+    </div>
+
+    <!-- 3 Supported Notice Types Cards -->
+    <div class="row g-4 mb-5">
+        <!-- Tenancy -->
+        <div class="col-md-4">
+            <div class="card h-100 shadow-sm border-0 border-top border-4 border-warning">
+                <div class="card-body">
+                    <span class="badge bg-warning text-dark mb-2">Tenancy Law</span>
+                    <h5 class="fw-bold text-dark">Security Deposit Demand</h5>
+                    <p class="text-muted small">
+                        Formal demand served by a tenant to a landlord demanding full refund of security deposit with interest and statutory penalties under the Model Tenancy Act, 2021.
+                    </p>
+                </div>
+                <div class="card-footer bg-white border-0 pt-0">
+                    <a href="{% url 'notice_create' 'security_deposit' %}" class="btn btn-warning w-100 fw-bold text-dark shadow-sm">
+                        <i class="bi bi-pencil-square me-1"></i> Draft Deposit Notice
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Consumer -->
+        <div class="col-md-4">
+            <div class="card h-100 shadow-sm border-0 border-top border-4 border-success">
+                <div class="card-body">
+                    <span class="badge bg-success mb-2">Consumer Protection</span>
+                    <h5 class="fw-bold text-dark">Defective Product / Service</h5>
+                    <p class="text-muted small">
+                        Statutory demand served upon a seller, manufacturer, or service provider demanding refund, replacement, or compensation under Consumer Protection Act, 2019.
+                    </p>
+                </div>
+                <div class="card-footer bg-white border-0 pt-0">
+                    <a href="{% url 'notice_create' 'defective_product' %}" class="btn btn-success w-100 fw-bold shadow-sm">
+                        <i class="bi bi-pencil-square me-1"></i> Draft Consumer Notice
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Labour -->
+        <div class="col-md-4">
+            <div class="card h-100 shadow-sm border-0 border-top border-4 border-primary">
+                <div class="card-body">
+                    <span class="badge bg-primary mb-2">Labour &amp; Wages</span>
+                    <h5 class="fw-bold text-dark">Unpaid Wages Demand</h5>
+                    <p class="text-muted small">
+                        Demand notice served upon an employer for unpaid salary, unauthorized deductions, or overtime dues under Code on Wages, 2019 (or prior acts).
+                    </p>
+                </div>
+                <div class="card-footer bg-white border-0 pt-0">
+                    <a href="{% url 'notice_create' 'unpaid_wages' %}" class="btn btn-primary w-100 fw-bold shadow-sm">
+                        <i class="bi bi-pencil-square me-1"></i> Draft Wages Notice
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- My Saved Drafts Table -->
+    <h4 class="fw-bold text-dark mb-3"><i class="bi bi-folder2-open me-2"></i>My Saved Draft Notices</h4>
+    {% if drafts %}
+        <div class="card shadow-sm border-0">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Notice Type</th>
+                            <th>Recipient</th>
+                            <th>Date Created</th>
+                            <th class="text-end">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for d in drafts %}
+                        <tr>
+                            <td class="fw-bold text-primary">{{ d.get_notice_type_display }}</td>
+                            <td>{{ d.form_data.recipient_name|default:"Not specified" }}</td>
+                            <td>{{ d.created_at|date:"d M Y, H:i" }}</td>
+                            <td class="text-end">
+                                <a href="{% url 'notice_detail' d.id %}" class="btn btn-outline-primary btn-sm me-1">
+                                    <i class="bi bi-eye me-1"></i> View &amp; Edit
+                                </a>
+                                <a href="{% url 'notice_export_pdf' d.id %}" class="btn btn-danger btn-sm">
+                                    <i class="bi bi-file-earmark-pdf me-1"></i> PDF
+                                </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    {% else %}
+        <div class="card border-0 bg-white p-5 text-center shadow-sm">
+            <i class="bi bi-file-earmark-text text-muted display-4 mb-3"></i>
+            <h5 class="fw-bold text-dark">No Saved Notice Drafts</h5>
+            <p class="text-muted mb-0">Choose one of the notice types above to generate your first statutory demand letter.</p>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

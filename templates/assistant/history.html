@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% block title %}My Query History - NyayaSahayak{% endblock %}
+
+{% block content %}
+<div class="container py-3">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="fw-bold text-primary mb-1"><i class="bi bi-clock-history me-2"></i>My Legal Query History</h2>
+            <p class="text-muted mb-0">Record of your past queries and generated statutory analyses</p>
+        </div>
+        <a href="{% url 'ask' %}" class="btn btn-primary fw-semibold">
+            <i class="bi bi-plus-circle me-1"></i> New Query
+        </a>
+    </div>
+
+    {% if queries %}
+        <div class="card shadow-sm border-0">
+            <div class="list-group list-group-flush">
+                {% for q in queries %}
+                <a href="{% url 'query_detail' q.id %}" class="list-group-item list-group-item-action p-3">
+                    <div class="d-flex w-100 justify-content-between align-items-center mb-1">
+                        <h6 class="mb-0 fw-bold text-dark">{{ q.question|truncatechars:100 }}</h6>
+                        <small class="text-muted">{{ q.created_at|date:"d M Y, H:i" }}</small>
+                    </div>
+                    <div class="d-flex align-items-center gap-2 mt-2">
+                        <span class="badge bg-secondary-subtle text-secondary">{{ q.get_legal_area_display }}</span>
+                        {% if q.refused %}
+                            <span class="badge bg-danger-subtle text-danger border border-danger-subtle">Refused / Guardrail</span>
+                        {% else %}
+                            <span class="badge bg-success-subtle text-success border border-success-subtle">
+                                <i class="bi bi-shield-check me-1"></i>{{ q.confidence_label }} Confidence
+                            </span>
+                        {% endif %}
+                        {% if q.include_repealed %}
+                            <span class="badge bg-warning-subtle text-warning-emphasis">Repealed Laws Allowed</span>
+                        {% endif %}
+                    </div>
+                </a>
+                {% endfor %}
+            </div>
+        </div>
+    {% else %}
+        <div class="card border-0 bg-white p-5 text-center shadow-sm">
+            <i class="bi bi-chat-square-text text-muted display-4 mb-3"></i>
+            <h5 class="fw-bold text-dark">No Legal Queries Yet</h5>
+            <p class="text-muted mb-3">You haven't submitted any questions yet. Start by asking about tenancy, consumer rights, or wages.</p>
+            <div>
+                <a href="{% url 'ask' %}" class="btn btn-primary fw-bold">Ask Your First Question</a>
+            </div>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}
+

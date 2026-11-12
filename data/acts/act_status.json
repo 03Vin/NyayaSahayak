@@ -1,0 +1,137 @@
+{
+  "consumer/Consumer Protection Act 2019.pdf": {
+    "act_name": "Consumer Protection Act, 2019",
+    "act_year": 2019,
+    "legal_area": "consumer",
+    "legal_status": "in_force",
+    "repealed_on": null,
+    "superseded_by": null,
+    "notes": "In force. Covers consumer rights, defective goods, deficiency of services, and dispute commissions."
+  },
+  "consumer/consumer_protection_act_2019.pdf": {
+    "act_name": "Consumer Protection Act, 2019",
+    "act_year": 2019,
+    "legal_area": "consumer",
+    "legal_status": "in_force",
+    "repealed_on": null,
+    "superseded_by": null,
+    "notes": "In force. Covers consumer rights, defective goods, deficiency of services, and dispute commissions."
+  },
+  "consumer/consumer_protection_act_2019.txt": {
+    "act_name": "Consumer Protection Act, 2019",
+    "act_year": 2019,
+    "legal_area": "consumer",
+    "legal_status": "in_force",
+    "repealed_on": null,
+    "superseded_by": null,
+    "notes": "In force. Covers consumer rights, defective goods, deficiency of services, and dispute commissions."
+  },
+  "tenancy/model-tenancy-act-394449.pdf": {
+    "act_name": "Model Tenancy Act, 2021",
+    "act_year": 2021,
+    "legal_area": "tenancy",
+    "legal_status": "in_force",
+    "repealed_on": null,
+    "superseded_by": null,
+    "notes": "This is a model law. Your state's own rent or tenancy act may apply instead."
+  },
+  "tenancy/model_tenancy_act_2021.pdf": {
+    "act_name": "Model Tenancy Act, 2021",
+    "act_year": 2021,
+    "legal_area": "tenancy",
+    "legal_status": "in_force",
+    "repealed_on": null,
+    "superseded_by": null,
+    "notes": "This is a model law. Your state's own rent or tenancy act may apply instead."
+  },
+  "tenancy/model_tenancy_act_2021.txt": {
+    "act_name": "Model Tenancy Act, 2021",
+    "act_year": 2021,
+    "legal_area": "tenancy",
+    "legal_status": "in_force",
+    "repealed_on": null,
+    "superseded_by": null,
+    "notes": "This is a model law. Your state's own rent or tenancy act may apply instead."
+  },
+  "labour/Code on wages act.pdf": {
+    "act_name": "Code on Wages, 2019",
+    "act_year": 2019,
+    "legal_area": "labour",
+    "legal_status": "in_force",
+    "repealed_on": null,
+    "superseded_by": null,
+    "notes": "In force since 21 November 2025 (Act No. 29 of 2019). Primary source for all wage and bonus claims."
+  },
+  "labour/code_on_wages_2019.pdf": {
+    "act_name": "Code on Wages, 2019",
+    "act_year": 2019,
+    "legal_area": "labour",
+    "legal_status": "in_force",
+    "repealed_on": null,
+    "superseded_by": null,
+    "notes": "In force since 21 November 2025 (Act No. 29 of 2019). Primary source for all wage and bonus claims."
+  },
+  "labour/code_on_wages_2019.txt": {
+    "act_name": "Code on Wages, 2019",
+    "act_year": 2019,
+    "legal_area": "labour",
+    "legal_status": "in_force",
+    "repealed_on": null,
+    "superseded_by": null,
+    "notes": "In force since 21 November 2025 (Act No. 29 of 2019). Primary source for all wage and bonus claims."
+  },
+  "labour/Payment of Wages Act, 1936.pdf": {
+    "act_name": "Payment of Wages Act, 1936",
+    "act_year": 1936,
+    "legal_area": "labour",
+    "legal_status": "repealed",
+    "repealed_on": "2025-11-21",
+    "superseded_by": "Code on Wages, 2019",
+    "notes": "Repealed on 21 November 2025; replaced by Code on Wages, 2019. Applies only to pre-commencement events."
+  },
+  "labour/payment_of_wages_act_1936.pdf": {
+    "act_name": "Payment of Wages Act, 1936",
+    "act_year": 1936,
+    "legal_area": "labour",
+    "legal_status": "repealed",
+    "repealed_on": "2025-11-21",
+    "superseded_by": "Code on Wages, 2019",
+    "notes": "Repealed on 21 November 2025; replaced by Code on Wages, 2019. Applies only to pre-commencement events."
+  },
+  "labour/payment_of_wages_act_1936.txt": {
+    "act_name": "Payment of Wages Act, 1936",
+    "act_year": 1936,
+    "legal_area": "labour",
+    "legal_status": "repealed",
+    "repealed_on": "2025-11-21",
+    "superseded_by": "Code on Wages, 2019",
+    "notes": "Repealed on 21 November 2025; replaced by Code on Wages, 2019. Applies only to pre-commencement events."
+  },
+  "labour/minimum wages act.pdf": {
+    "act_name": "Minimum Wages Act, 1948",
+    "act_year": 1948,
+    "legal_area": "labour",
+    "legal_status": "repealed",
+    "repealed_on": "2025-11-21",
+    "superseded_by": "Code on Wages, 2019",
+    "notes": "Repealed on 21 November 2025; replaced by Code on Wages, 2019. Applies only to pre-commencement events."
+  },
+  "labour/minimum_wages_act_1948.pdf": {
+    "act_name": "Minimum Wages Act, 1948",
+    "act_year": 1948,
+    "legal_area": "labour",
+    "legal_status": "repealed",
+    "repealed_on": "2025-11-21",
+    "superseded_by": "Code on Wages, 2019",
+    "notes": "Repealed on 21 November 2025; replaced by Code on Wages, 2019. Applies only to pre-commencement events."
+  },
+  "labour/minimum_wages_act_1948.txt": {
+    "act_name": "Minimum Wages Act, 1948",
+    "act_year": 1948,
+    "legal_area": "labour",
+    "legal_status": "repealed",
+    "repealed_on": "2025-11-21",
+    "superseded_by": "Code on Wages, 2019",
+    "notes": "Repealed on 21 November 2025; replaced by Code on Wages, 2019. Applies only to pre-commencement events."
+  }
+}

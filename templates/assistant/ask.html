@@ -1,0 +1,238 @@
+{% extends 'base.html' %}
+
+{% block title %}Ask Legal Question - NyayaSahayak{% endblock %}
+
+{% block content %}
+<div class="container py-3">
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            <!-- Query Input Card -->
+            <div class="card shadow-sm border-0 mb-4">
+                <div class="card-header bg-primary text-white py-3 d-flex justify-content-between align-items-center">
+                    <div>
+                        <h4 class="mb-0 fw-bold"><i class="bi bi-chat-left-text-fill me-2"></i>Ask a Legal Question</h4>
+                        <p class="small text-white-50 mb-0">Plain-language statutory legal aid assistant for Indian citizens</p>
+                    </div>
+                    <span class="badge bg-light text-primary small">
+                        Quota: {{ remaining_quota }} queries left this hour
+                    </span>
+                </div>
+                <div class="card-body p-4">
+                    <form id="ask-form" method="post" action="{% url 'ask' %}">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="question-input" class="form-label fw-bold">Your Legal Dispute or Question:</label>
+                            <textarea id="question-input" name="question" class="form-control" rows="4" maxlength="{{ max_chars }}" placeholder="Describe your dispute in plain English or Hindi. E.g.: 'My landlord is refusing to return my security deposit of Rs 30,000 after I vacated the flat. What are my rights under tenancy law?'" required>{{ submitted_question|default:'' }}</textarea>
+                            <div class="d-flex justify-content-between mt-1">
+                                <span class="small text-muted">Be specific with dates, amounts, and facts for accurate legal retrieval.</span>
+                                <span id="char-counter" class="text-muted small">0 / {{ max_chars }} characters</span>
+                            </div>
+                        </div>
+
+                        <div class="row g-3 align-items-center mb-4">
+                            <div class="col-md-6">
+                                <label for="legal-area" class="form-label fw-semibold small mb-1">Target Legal Domain:</label>
+                                <select id="legal-area" name="legal_area" class="form-select">
+                                    <option value="auto" {% if default_area == 'auto' %}selected{% endif %}>Auto-Detect Domain</option>
+                                    <option value="consumer" {% if default_area == 'consumer' %}selected{% endif %}>Consumer Protection (Goods, Services, E-commerce)</option>
+                                    <option value="tenancy" {% if default_area == 'tenancy' %}selected{% endif %}>Tenancy / Rent (Model Tenancy Act, 2021)</option>
+                                    <option value="labour" {% if default_area == 'labour' %}selected{% endif %}>Labour / Wages (Code on Wages, 2019)</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 pt-md-4">
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input" type="checkbox" role="switch" id="include_repealed" name="include_repealed" value="1" {% if include_repealed %}checked{% endif %}>
+                                    <label class="form-check-label small" for="include_repealed">
+                                        <strong>Include repealed laws</strong> <span class="text-muted">(for disputes arising before 21 Nov 2025)</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="d-grid">
+                            <button id="ask-submit-btn" type="submit" class="btn btn-primary btn-lg fw-bold shadow-sm">
+                                <span id="ask-spinner" class="spinner-border spinner-border-sm me-2 d-none" role="status" aria-hidden="true"></span>
+                                <i class="bi bi-search me-1"></i>
+                                <span id="ask-btn-text">Search Indian Statutes &amp; Analyze</span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Answer Section (Rendered upon submission) -->
+            {% if result %}
+            <div id="answer-section" class="mb-5">
+                <!-- Confidence & Latency Header -->
+                <div class="d-flex flex-wrap justify-content-between align-items-center mb-3 p-3 bg-white rounded shadow-sm border">
+                    <div class="d-flex align-items-center gap-2">
+                        <span class="text-muted small">Retrieval Confidence:</span>
+                        {% if result.refused %}
+                            <span class="badge bg-danger-subtle text-danger border border-danger-subtle px-3 py-2 fw-bold">
+                                <i class="bi bi-shield-x me-1"></i> Guardrail Triggered (Low Confidence)
+                            </span>
+                        {% elif result.confidence_label == 'High' %}
+                            <span class="badge bg-success-subtle text-success border border-success-subtle px-3 py-2 fw-bold">
+                                <i class="bi bi-shield-check me-1"></i> High Confidence (Score: {{ result.top_score|floatformat:2 }})
+                            </span>
+                        {% elif result.confidence_label == 'Medium' %}
+                            <span class="badge bg-warning-subtle text-warning-emphasis border border-warning-subtle px-3 py-2 fw-bold">
+                                <i class="bi bi-shield-exclamation me-1"></i> Medium Confidence (Score: {{ result.top_score|floatformat:2 }})
+                            </span>
+                        {% else %}
+                            <span class="badge bg-secondary-subtle text-secondary border px-3 py-2 fw-bold">
+                                <i class="bi bi-shield me-1"></i> Low Confidence (Score: {{ result.top_score|floatformat:2 }})
+                            </span>
+                        {% endif %}
+
+                        {% if result.is_pre_commencement %}
+                            <span class="badge bg-info-subtle text-info-emphasis border border-info-subtle px-2 py-2">
+                                <i class="bi bi-clock-history me-1"></i> Pre-Nov 2025 Dispute Detected
+                            </span>
+                        {% endif %}
+                    </div>
+                    <div class="text-muted small mt-2 mt-sm-0">
+                        <i class="bi bi-stopwatch me-1"></i> Response Time: {{ result.latency_ms }} ms
+                        {% if query_id %}
+                            • <a href="{% url 'query_detail' query_id %}" class="text-decoration-none">Permanent Link</a>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <!-- Case 1: Refused / Low Confidence Guardrail -->
+                {% if result.refused %}
+                <div class="alert refusal-alert shadow-sm p-4 mb-4" role="alert">
+                    <div class="d-flex align-items-start">
+                        <i class="bi bi-exclamation-octagon-fill fs-2 text-danger me-3 mt-1"></i>
+                        <div>
+                            <h5 class="fw-bold text-danger mb-2">Automated Guardrail: Query Refusal</h5>
+                            <p class="mb-3 fs-6">{{ result.answer }}</p>
+                            <hr class="border-danger-subtle">
+                            <h6 class="fw-bold mb-2 text-dark"><i class="bi bi-telephone-fill text-danger me-2"></i>Free Legal Aid Contacts (India):</h6>
+                            <ul class="mb-0 small">
+                                <li><strong>National Legal Services Authority (NALSA):</strong> Dial toll-free <code>15100</code></li>
+                                <li><strong>District Legal Services Authority (DLSA):</strong> Visit your local District Court complex</li>
+                                <li><strong>State Consumer Helpline:</strong> Dial <code>1915</code> for unfair trade disputes</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Case 2: Successful Statutory Answer -->
+                {% else %}
+                <div class="card shadow-sm border-0 mb-4">
+                    <div class="card-header bg-white py-3 border-bottom d-flex justify-content-between align-items-center">
+                        <h5 class="card-title mb-0 fw-bold text-dark">
+                            <i class="bi bi-journal-text text-primary me-2"></i>Statutory Legal Analysis
+                        </h5>
+                        <span class="small text-muted"><i class="bi bi-shield-check text-success me-1"></i>Backed by Verified Statutes</span>
+                    </div>
+                    <div class="card-body p-4">
+                        <!-- Model Law Warning Notice if Applicable -->
+                        {% if result.has_model_law %}
+                        <div class="alert alert-warning border-warning d-flex align-items-center py-2 px-3 mb-3 small" role="alert">
+                            <i class="bi bi-exclamation-triangle-fill text-warning me-2 fs-5"></i>
+                            <div>
+                                <strong>Tenancy Law Note:</strong> The Model Tenancy Act, 2021 is a model framework for states. Your state's own rent control or tenancy legislation may apply to local court proceedings.
+                            </div>
+                        </div>
+                        {% endif %}
+
+                        <!-- Answer Body in readable paragraphs -->
+                        <div class="fs-6 lh-base text-dark mb-4">
+                            {{ result.answer|linebreaks }}
+                        </div>
+
+                        <!-- Practical Next Steps List -->
+                        {% if result.next_steps %}
+                        <div class="p-3 bg-light rounded border mb-4">
+                            <h6 class="fw-bold text-primary mb-2">
+                                <i class="bi bi-check2-square me-2"></i>What You Can Do Next:
+                            </h6>
+                            <ol class="mb-0 ps-3">
+                                {% for step in result.next_steps %}
+                                <li class="mb-1 text-dark">{{ step }}</li>
+                                {% endfor %}
+                            </ol>
+                        </div>
+                        {% endif %}
+
+                        <!-- Statutory Citation Badges with Expansion -->
+                        <div class="pt-2">
+                            <h6 class="fw-bold text-secondary mb-2">
+                                <i class="bi bi-bookmarks-fill me-2"></i>Cited Statutory Provisions (Click to Inspect Source Text):
+                            </h6>
+                            <div class="d-flex flex-wrap gap-2 mb-3">
+                                {% for cite in result.citations %}
+                                <button type="button" class="btn btn-sm {% if cite.legal_status == 'repealed' %}btn-secondary{% else %}btn-outline-primary{% endif %} citation-toggle-btn shadow-sm" data-bs-toggle="collapse" data-bs-target="#chunk-details-{{ forloop.counter }}" aria-expanded="false">
+                                    <i class="bi bi-book me-1"></i>
+                                    <strong>{{ cite.act }}</strong> § {{ cite.section }}
+                                    {% if cite.legal_status == 'repealed' %}
+                                        <span class="badge bg-dark ms-1">Repealed</span>
+                                    {% else %}
+                                        <span class="badge bg-success ms-1">In Force</span>
+                                    {% endif %}
+                                </button>
+                                {% empty %}
+                                <span class="text-muted small">No specific section citations extracted.</span>
+                                {% endfor %}
+                            </div>
+
+                            <!-- Collapsible Source Text Cards -->
+                            {% for chunk in result.retrieved_chunks %}
+                            <div class="collapse mb-3" id="chunk-details-{{ forloop.counter }}">
+                                <div class="card card-body bg-light border p-3">
+                                    <div class="d-flex justify-content-between align-items-start mb-2">
+                                        <div>
+                                            <h6 class="fw-bold mb-1 text-dark">
+                                                {{ chunk.act_name }} — Section {{ chunk.section_number }}: {{ chunk.section_title }}
+                                            </h6>
+                                            <div class="small text-muted">Source File: <code>{{ chunk.source_file }}</code></div>
+                                        </div>
+                                        <div>
+                                            {% if chunk.legal_status == 'repealed' %}
+                                                <span class="badge badge-repealed"><i class="bi bi-x-circle me-1"></i>Repealed Law</span>
+                                            {% else %}
+                                                <span class="badge badge-in-force"><i class="bi bi-check-circle me-1"></i>In Force</span>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+
+                                    {% if chunk.replacement_note %}
+                                    <div class="alert alert-info py-1 px-2 small mb-2">
+                                        <i class="bi bi-arrow-repeat me-1"></i><strong>Transition:</strong> {{ chunk.replacement_note }}
+                                    </div>
+                                    {% endif %}
+
+                                    <div class="p-3 bg-white rounded border small text-secondary font-monospace" style="white-space: pre-wrap; max-height: 250px; overflow-y: auto;">
+{{ chunk.text }}
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+
+                        <!-- CTA to Notice Generator -->
+                        <div class="mt-4 pt-3 border-top d-flex flex-wrap justify-content-between align-items-center">
+                            <span class="text-muted small">Need to send a formal legal demand to the opposing party?</span>
+                            <a href="{% url 'notice_list' %}" class="btn btn-outline-dark btn-sm fw-semibold">
+                                <i class="bi bi-file-earmark-pdf me-1"></i>Draft Formal Notice
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+
+                <!-- Persistent Legal Disclaimer on every answer page -->
+                <div class="p-3 bg-light rounded text-center border">
+                    <p class="small text-muted mb-0">
+                        <i class="bi bi-shield-shaded me-1 text-warning"></i>
+                        <strong>Persistent Legal Notice:</strong> This analysis is generated by NyayaSahayak based on indexed statutory provisions for informational purposes only. It is not professional legal advice. Consult an advocate for legal representation.
+                    </p>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

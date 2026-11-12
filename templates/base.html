@@ -1,0 +1,153 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}NyayaSahayak - AI Legal Aid Assistant{% endblock %}</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="{% static 'css/styles.css' %}" rel="stylesheet">
+    {% block extra_head %}{% endblock %}
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark shadow-sm" style="background-color: #1a365d;">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="{% url 'home' %}">
+                <i class="bi bi-bank2 me-2 text-warning fs-4"></i>
+                <span class="text-white fw-bold">NyayaSahayak</span>
+                <span class="brand-badge ms-2">Legal Aid AI</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain" aria-controls="navbarMain" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarMain">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.resolver_match.url_name == 'ask' %}active{% endif %}" href="{% url 'ask' %}">
+                            <i class="bi bi-chat-square-text me-1"></i> Ask Question
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if 'notice' in request.resolver_match.url_name %}active{% endif %}" href="{% url 'notice_list' %}">
+                            <i class="bi bi-file-earmark-text me-1"></i> Draft Legal Notice
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.resolver_match.url_name == 'history' %}active{% endif %}" href="{% url 'history' %}">
+                            <i class="bi bi-clock-history me-1"></i> My History
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.resolver_match.url_name == 'laws_covered' %}active{% endif %}" href="{% url 'laws_covered' %}">
+                            <i class="bi bi-journal-bookmark me-1"></i> Laws Covered
+                        </a>
+                    </li>
+                    {% if user.is_staff %}
+                    <li class="nav-item">
+                        <a class="nav-link text-warning fw-semibold {% if 'evaluation' in request.resolver_match.url_name %}active{% endif %}" href="{% url 'eval_results' %}">
+                            <i class="bi bi-graph-up me-1"></i> Evaluation
+                        </a>
+                    </li>
+                    {% endif %}
+                </ul>
+
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-lg-center">
+                    {% if user.is_authenticated %}
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle text-light" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="bi bi-person-circle me-1"></i> {{ user.username }}
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end shadow-sm">
+                            <li><a class="dropdown-item" href="{% url 'profile' %}"><i class="bi bi-person me-2"></i>Profile</a></li>
+                            {% if user.is_staff %}
+                            <li><a class="dropdown-item" href="{% url 'admin:index' %}"><i class="bi bi-shield-lock me-2"></i>Admin Panel</a></li>
+                            {% endif %}
+                            <li><hr class="dropdown-divider"></li>
+                            <li>
+                                <form action="{% url 'logout' %}" method="post" class="d-inline">
+                                    {% csrf_token %}
+                                    <button type="submit" class="dropdown-item text-danger"><i class="bi bi-box-arrow-right me-2"></i>Logout</button>
+                                </form>
+                            </li>
+                        </ul>
+                    </li>
+                    {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link text-light" href="{% url 'login' %}">
+                            <i class="bi bi-box-arrow-in-right me-1"></i> Login
+                        </a>
+                    </li>
+                    <li class="nav-item ms-lg-2">
+                        <a class="btn btn-warning btn-sm text-dark fw-semibold" href="{% url 'register' %}">
+                            <i class="bi bi-person-plus me-1"></i> Register
+                        </a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Flash Messages Container -->
+    <div class="container mt-3">
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags|default:'info' }} alert-dismissible fade show shadow-sm" role="alert">
+                    {% if message.tags == 'error' %}
+                        <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                    {% elif message.tags == 'success' %}
+                        <i class="bi bi-check-circle-fill me-2"></i>
+                    {% else %}
+                        <i class="bi bi-info-circle-fill me-2"></i>
+                    {% endif %}
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endfor %}
+        {% endif %}
+    </div>
+
+    <!-- Main Content -->
+    <main class="py-4">
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Footer with Mandatory Legal Disclaimer -->
+    <footer class="mt-auto py-4 border-top">
+        <div class="container">
+            <div class="row gy-3">
+                <div class="col-md-7">
+                    <h6 class="text-white mb-2"><i class="bi bi-shield-shaded text-warning me-1"></i> Legal Aid Disclaimer</h6>
+                    <p class="small mb-1 text-light opacity-75">
+                        <strong>NyayaSahayak is an AI legal aid assistant for educational &amp; general informational purposes. It does NOT constitute legal advice or create an advocate-client relationship.</strong>
+                    </p>
+                    <p class="small mb-0 text-light opacity-75">
+                        Laws change, and their application depends on specific facts. Always consult a qualified advocate or your local <strong>District Legal Services Authority (DLSA)</strong> for actual dispute representation.
+                    </p>
+                </div>
+                <div class="col-md-5 text-md-end">
+                    <div class="p-2 rounded bg-dark border border-secondary mb-2 d-inline-block text-start">
+                        <div class="small text-warning fw-bold"><i class="bi bi-telephone-fill me-1"></i> Free Legal Aid Helpline (India):</div>
+                        <div class="fs-6 text-white fw-bold">NALSA Toll-Free: 15100</div>
+                    </div>
+                    <p class="small text-light opacity-50 mb-0">
+                        &copy; 2026 NyayaSahayak. Built with Django &amp; RAG for Indian Legal Literacy.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap 5 Bundle JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JS -->
+    <script src="{% static 'js/main.js' %}"></script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>
+

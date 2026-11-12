@@ -1,0 +1,115 @@
+/* Custom styling for NyayaSahayak */
+:root {
+    --nyaya-primary: #1a365d;
+    --nyaya-secondary: #2b6cb0;
+    --nyaya-accent: #d69e2e;
+    --nyaya-bg-light: #f7fafc;
+}
+
+body {
+    background-color: #f8f9fa;
+    color: #2d3748;
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    flex: 1 0 auto;
+}
+
+.navbar-brand {
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    color: #1a365d !important;
+}
+
+.brand-badge {
+    background-color: #d69e2e;
+    color: #fff;
+    font-size: 0.65rem;
+    padding: 2px 6px;
+    border-radius: 4px;
+    text-transform: uppercase;
+    font-weight: 600;
+    vertical-align: middle;
+}
+
+.badge-in-force {
+    background-color: #2e7d32;
+    color: #ffffff;
+    font-weight: 600;
+}
+
+.badge-repealed {
+    background-color: #6c757d;
+    color: #ffffff;
+    font-weight: 600;
+}
+
+.badge-model-law {
+    background-color: #e65100;
+    color: #ffffff;
+    font-weight: 600;
+}
+
+.repealed-alert {
+    border-left: 5px solid #d32f2f;
+    background-color: #ffebee;
+    color: #b71c1c;
+}
+
+.refusal-alert {
+    border-left: 5px solid #f57c00;
+    background-color: #fff3e0;
+    color: #e65100;
+}
+
+.confidence-high {
+    color: #2e7d32;
+    font-weight: 700;
+}
+
+.confidence-medium {
+    color: #ed6c02;
+    font-weight: 700;
+}
+
+.confidence-low {
+    color: #d32f2f;
+    font-weight: 700;
+}
+
+.citation-card {
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    transition: all 0.2s ease-in-out;
+}
+
+.citation-card:hover {
+    border-color: #2b6cb0;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.card-header-nyaya {
+    background-color: #1a365d;
+    color: #ffffff;
+}
+
+footer {
+    flex-shrink: 0;
+    background-color: #1a202c;
+    color: #a0aec0;
+}
+
+footer a {
+    color: #cbd5e0;
+    text-decoration: none;
+}
+
+footer a:hover {
+    color: #ffffff;
+    text-decoration: underline;
+}
+

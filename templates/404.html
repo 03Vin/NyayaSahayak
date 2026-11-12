@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block title %}Page Not Found - NyayaSahayak{% endblock %}
+
+{% block content %}
+<div class="container py-5 text-center">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <i class="bi bi-compass text-warning display-1 mb-3"></i>
+            <h2 class="fw-bold text-dark mb-2">404 - Page Not Found</h2>
+            <p class="text-muted mb-4">
+                The requested statutory resource, query record, or page could not be located.
+            </p>
+            <div class="d-flex justify-content-center gap-2">
+                <a href="{% url 'home' %}" class="btn btn-primary fw-semibold">
+                    <i class="bi bi-house-door me-1"></i> Return Home
+                </a>
+                <a href="{% url 'ask' %}" class="btn btn-outline-primary fw-semibold">
+                    <i class="bi bi-chat-dots me-1"></i> Ask Legal Question
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

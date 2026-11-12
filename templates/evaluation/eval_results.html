@@ -1,0 +1,176 @@
+{% extends 'base.html' %}
+
+{% block title %}Evaluation Benchmark - NyayaSahayak Staff{% endblock %}
+
+{% block content %}
+<div class="container py-3">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <span class="badge bg-danger-subtle text-danger mb-1"><i class="bi bi-shield-lock me-1"></i> Staff &amp; Faculty Review Only</span>
+            <h2 class="fw-bold text-primary mb-1"><i class="bi bi-graph-up me-2"></i>RAG System Evaluation &amp; Guardrail Benchmarks</h2>
+            <p class="text-muted mb-0">Quantitative assessment of statutory retrieval accuracy, refusal behavior, and repealed-law misuse</p>
+        </div>
+        <div class="badge bg-secondary fs-6 p-2 shadow-sm">
+            Total Bank: {{ total_questions }} Test Cases
+        </div>
+    </div>
+
+    {% if latest_run %}
+    <!-- Summary Metrics Cards -->
+    <div class="row g-3 mb-4">
+        <!-- Top 1 Accuracy -->
+        <div class="col-md-3">
+            <div class="card shadow-sm border-0 border-top border-4 border-primary">
+                <div class="card-body">
+                    <div class="text-muted small fw-semibold">Top-1 Statutory Accuracy</div>
+                    <h3 class="fw-bold text-primary mb-1">{{ latest_run.top1_accuracy|floatformat:1 }}%</h3>
+                    <div class="small text-muted">Exact section match at Rank #1</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Top 3 Accuracy -->
+        <div class="col-md-3">
+            <div class="card shadow-sm border-0 border-top border-4 border-success">
+                <div class="card-body">
+                    <div class="text-muted small fw-semibold">Top-3 Retrieval Accuracy</div>
+                    <h3 class="fw-bold text-success mb-1">{{ latest_run.top3_accuracy|floatformat:1 }}%</h3>
+                    <div class="small text-muted">Target section retrieved in Top 3</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Refusal Precision & Recall -->
+        <div class="col-md-3">
+            <div class="card shadow-sm border-0 border-top border-4 border-warning">
+                <div class="card-body">
+                    <div class="text-muted small fw-semibold">Refusal Precision / Recall</div>
+                    <h3 class="fw-bold text-dark mb-1">{{ latest_run.refusal_precision|floatformat:0 }}% / {{ latest_run.refusal_recall|floatformat:0 }}%</h3>
+                    <div class="small text-muted">Precision on out-of-scope queries</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Repealed Law Misuse Rate -->
+        <div class="col-md-3">
+            <div class="card shadow-sm border-0 border-top border-4 {% if latest_run.repealed_misuse_rate == 0 %}border-success{% else %}border-danger{% endif %}">
+                <div class="card-body">
+                    <div class="text-muted small fw-semibold">Repealed Misuse Rate</div>
+                    <h3 class="fw-bold {% if latest_run.repealed_misuse_rate == 0 %}text-success{% else %}text-danger{% endif %} mb-1">
+                        {{ latest_run.repealed_misuse_rate|floatformat:1 }}%
+                    </h3>
+                    <div class="small text-muted">Target: 0.0% (No repealed law as current)</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Active Run Metadata Bar -->
+    <div class="alert alert-light border shadow-sm d-flex flex-wrap justify-content-between align-items-center mb-4 py-2 px-3">
+        <div>
+            <strong>Run ID #{{ latest_run.id }}</strong> • Calibrated Threshold: <code>{{ latest_run.threshold|floatformat:2 }}</code> • Avg Latency: <code>{{ latest_run.avg_latency_ms|floatformat:1 }} ms</code>
+        </div>
+        <div class="small text-muted">
+            Executed on {{ latest_run.created_at|date:"d M Y, H:i" }}
+        </div>
+    </div>
+
+    <!-- Per-Question Detailed Results Table -->
+    <div class="card shadow-sm border-0 mb-4">
+        <div class="card-header bg-white py-3 border-bottom d-flex justify-content-between align-items-center">
+            <h5 class="mb-0 fw-bold text-dark"><i class="bi bi-table me-2"></i>Detailed Question-Level Benchmark Logs</h5>
+            <span class="badge bg-primary-subtle text-primary">{{ results|length }} Evaluated Cases</span>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0 small">
+                <thead class="table-light">
+                    <tr>
+                        <th>#</th>
+                        <th>Question</th>
+                        <th>Domain</th>
+                        <th>Expected Act &amp; Section</th>
+                        <th>Top Retrieved Match</th>
+                        <th>Score</th>
+                        <th>Top-1 Hit</th>
+                        <th>Top-3 Hit</th>
+                        <th>Refused</th>
+                        <th>Outcome</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for res in results %}
+                    <tr class="{% if not res.passed %}table-danger-subtle{% endif %}">
+                        <td class="fw-bold">{{ res.question.id }}</td>
+                        <td style="max-width: 280px;">
+                            <div class="text-truncate" title="{{ res.question.question }}">{{ res.question.question }}</div>
+                        </td>
+                        <td>
+                            <span class="badge bg-secondary-subtle text-secondary">{{ res.question.legal_area }}</span>
+                        </td>
+                        <td>
+                            {% if res.question.should_refuse %}
+                                <span class="badge bg-warning-subtle text-warning-emphasis">Out-of-Scope</span>
+                            {% elif res.question.needs_verification %}
+                                <span class="badge bg-info-subtle text-info-emphasis">Verify: {{ res.question.expected_section }}</span>
+                            {% else %}
+                                <strong>{{ res.question.expected_act|truncatechars:20 }}</strong> § {{ res.question.expected_section }}
+                            {% endif %}
+                        </td>
+                        <td style="max-width: 240px;">
+                            {% if res.retrieved %}
+                                {% with top_item=res.retrieved|first %}
+                                    <div class="text-truncate" title="{{ top_item.act }} §{{ top_item.section }}: {{ top_item.title }}">
+                                        {{ top_item.act|truncatechars:20 }} §{{ top_item.section }}
+                                    </div>
+                                {% endwith %}
+                            {% else %}
+                                <span class="text-muted">—</span>
+                            {% endif %}
+                        </td>
+                        <td class="font-monospace fw-semibold">{{ res.top_score|floatformat:2 }}</td>
+                        <td>
+                            {% if res.correct_top1 %}
+                                <i class="bi bi-check-circle-fill text-success fs-6"></i>
+                            {% else %}
+                                <i class="bi bi-x-circle text-muted"></i>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if res.correct_top3 %}
+                                <i class="bi bi-check-circle-fill text-success fs-6"></i>
+                            {% else %}
+                                <i class="bi bi-x-circle text-muted"></i>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if res.refused %}
+                                <span class="badge bg-danger">Refused</span>
+                            {% else %}
+                                <span class="badge bg-light text-dark border">Answered</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if res.passed %}
+                                <span class="badge bg-success"><i class="bi bi-check me-1"></i>PASS</span>
+                            {% else %}
+                                <span class="badge bg-danger"><i class="bi bi-x me-1"></i>FAIL</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="10" class="text-center py-4 text-muted">No question results recorded for this run.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    {% else %}
+    <div class="alert alert-info shadow-sm mb-4">
+        <i class="bi bi-info-circle-fill me-2"></i>
+        No evaluation run recorded yet. Execute <code>python manage.py run_eval</code> to run the benchmark suite.
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

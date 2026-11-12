@@ -1,0 +1,107 @@
+{% extends 'base.html' %}
+
+{% block title %}Laws Covered - NyayaSahayak{% endblock %}
+
+{% block content %}
+<div class="container py-3">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="fw-bold text-primary mb-1"><i class="bi bi-book-half me-2"></i>Statutory Coverage &amp; Legal Status</h2>
+            <p class="text-muted mb-0">Official Indian legal acts indexed in NyayaSahayak with active enforceability status</p>
+        </div>
+        <div class="badge bg-primary fs-6 p-2">
+            Total Indexed Sections: {{ total_chunks }}
+        </div>
+    </div>
+
+    {% if total_chunks == 0 %}
+    <div class="alert alert-info d-flex align-items-center shadow-sm" role="alert">
+        <i class="bi bi-info-circle-fill fs-3 text-info me-3"></i>
+        <div>
+            <strong>No legal data indexed yet.</strong>
+            Please place the official act files in <code>data/acts/&lt;area&gt;/</code> and run <code>python manage.py ingest_acts</code>.
+        </div>
+    </div>
+    {% endif %}
+
+    <div class="card shadow-sm border-0 mb-4">
+        <div class="card-header bg-white py-3">
+            <h5 class="mb-0 fw-bold text-dark"><i class="bi bi-list-check me-2"></i>Curated Acts Repository</h5>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th>Legal Area</th>
+                        <th>Act Title</th>
+                        <th>Year</th>
+                        <th>Legal Status</th>
+                        <th>Repealed / In Force Date</th>
+                        <th>Superseded By</th>
+                        <th>Indexed Sections</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for file_key, meta in status_data.items %}
+                    <tr>
+                        <td>
+                            <span class="badge bg-secondary-subtle text-secondary text-uppercase">{{ meta.legal_area }}</span>
+                        </td>
+                        <td class="fw-semibold text-dark">
+                            {{ meta.act_name }}
+                            {% if meta.notes %}
+                                <div class="small text-muted fst-italic">{{ meta.notes }}</div>
+                            {% endif %}
+                        </td>
+                        <td>{{ meta.act_year }}</td>
+                        <td>
+                            {% if meta.legal_status == 'in_force' %}
+                                <span class="badge badge-in-force"><i class="bi bi-check-circle me-1"></i>In Force</span>
+                            {% else %}
+                                <span class="badge badge-repealed"><i class="bi bi-x-circle me-1"></i>Repealed</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if meta.repealed_on %}
+                                <span class="text-danger fw-semibold">{{ meta.repealed_on }}</span>
+                            {% elif meta.legal_status == 'in_force' and meta.act_name == 'Code on Wages, 2019' %}
+                                <span class="text-success fw-semibold">Commenced: 2025-11-21</span>
+                            {% else %}
+                                <span class="text-success fw-semibold">Currently Active</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if meta.superseded_by %}
+                                <span class="badge bg-info-subtle text-info-emphasis">{{ meta.superseded_by }}</span>
+                            {% else %}
+                                <span class="text-muted">—</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <span class="badge bg-dark rounded-pill">
+                                {{ act_counts|default_if_none:0|slice:meta.act_name|default:0 }} sections
+                            </span>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="7" class="text-center py-4 text-muted">
+                            Status registry file (act_status.json) not found or empty.
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Savings Clause Notice for Labour -->
+    <div class="card border-0 bg-light-subtle shadow-sm p-3">
+        <h6 class="fw-bold text-primary mb-1"><i class="bi bi-info-circle-fill me-2"></i>Statutory Savings Note: Code on Wages, 2019</h6>
+        <p class="small text-muted mb-0">
+            Disputes, proceedings, or liabilities already pending prior to <strong>21 November 2025</strong> may continue under the older acts (Payment of Wages Act, 1936 / Minimum Wages Act, 1948) as per the statutory savings provisions. Consult a legal aid clinic for active pre-commencement litigation.
+        </p>
+    </div>
+</div>
+{% endblock %}
+

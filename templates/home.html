@@ -1,0 +1,140 @@
+{% extends 'base.html' %}
+
+{% block title %}NyayaSahayak: AI Legal Aid Assistant - Grounded in Indian Law{% endblock %}
+
+{% block content %}
+<div class="container py-3">
+    <!-- Hero Section -->
+    <div class="p-5 mb-4 bg-white rounded-3 shadow-sm border">
+        <div class="container-fluid py-2">
+            <div class="row align-items-center">
+                <div class="col-lg-8">
+                    <span class="badge bg-primary-subtle text-primary border border-primary-subtle px-3 py-2 rounded-pill fw-semibold mb-3">
+                        <i class="bi bi-shield-check me-1"></i> RAG Grounded • Indian Law Citing • Hallucination Guarded
+                    </span>
+                    <h1 class="display-5 fw-bold text-dark lh-sm mb-3">
+                        Legal Aid Answers You Can Trust, Citing Actual Indian Statutes.
+                    </h1>
+                    <p class="col-md-11 fs-5 text-muted mb-4">
+                        Ordinary Indian citizens struggle to understand their legal rights in everyday disputes. NyayaSahayak answers your questions in plain English or Hindi, cites exact sections of the law, warns you about repealed statutes, and refuses to guess when unsure.
+                    </p>
+                    <div class="d-flex flex-wrap gap-2">
+                        {% if user.is_authenticated %}
+                            <a href="{% url 'ask' %}" class="btn btn-primary btn-lg px-4 fw-semibold">
+                                <i class="bi bi-chat-dots-fill me-2"></i>Ask a Legal Question
+                            </a>
+                            <a href="{% url 'notice_list' %}" class="btn btn-outline-dark btn-lg px-4 fw-semibold">
+                                <i class="bi bi-file-earmark-pdf me-2"></i>Generate Legal Notice
+                            </a>
+                        {% else %}
+                            <a href="{% url 'register' %}" class="btn btn-warning btn-lg px-4 fw-bold text-dark">
+                                <i class="bi bi-person-plus-fill me-2"></i>Get Started Free
+                            </a>
+                            <a href="{% url 'login' %}" class="btn btn-outline-primary btn-lg px-4 fw-semibold">
+                                <i class="bi bi-box-arrow-in-right me-2"></i>Sign In
+                            </a>
+                            <a href="{% url 'laws_covered' %}" class="btn btn-link text-muted align-self-center">
+                                View Covered Acts <i class="bi bi-arrow-right"></i>
+                            </a>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="col-lg-4 text-center mt-4 mt-lg-0">
+                    <div class="card border-0 bg-light p-4 shadow-sm text-start">
+                        <h6 class="fw-bold text-primary mb-3"><i class="bi bi-star-fill text-warning me-1"></i> Core Differentiators</h6>
+                        <ul class="list-unstyled mb-0 small">
+                            <li class="mb-2"><i class="bi bi-check-circle-fill text-success me-2"></i><strong>Exact Section Citations:</strong> Links directly to statutory text.</li>
+                            <li class="mb-2"><i class="bi bi-check-circle-fill text-success me-2"></i><strong>Confidence Guardrails:</strong> Refuses to hallucinate when retrieval score is low.</li>
+                            <li class="mb-2"><i class="bi bi-check-circle-fill text-success me-2"></i><strong>Repealed Law Awareness:</strong> Differentiates between in-force and repealed acts (e.g. Code on Wages commencement).</li>
+                            <li><i class="bi bi-check-circle-fill text-success me-2"></i><strong>Legal Notice Generator:</strong> Export structured PDF demand notices.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mandatory Disclaimer Banner -->
+    <div class="alert alert-warning border-warning d-flex align-items-center shadow-sm mb-4" role="alert">
+        <i class="bi bi-exclamation-triangle-fill fs-3 text-warning me-3"></i>
+        <div>
+            <strong>Notice to Citizens:</strong> NyayaSahayak is an automated legal aid tool designed to explain statutory provisions in accessible language. It does not replace an advocate. If you are facing an active legal dispute, call the free <strong>NALSA Helpline (15100)</strong> or visit your local Taluk / District Legal Services Authority (DLSA).
+        </div>
+    </div>
+
+    <!-- 3 Covered Legal Domains Grid -->
+    <h3 class="fw-bold text-dark mb-3"><i class="bi bi-layers-fill text-primary me-2"></i>Curated Legal Domains</h3>
+    <div class="row g-4 mb-4">
+        <!-- Consumer Law -->
+        <div class="col-md-4">
+            <div class="card h-100 shadow-sm border-0 border-top border-4 border-success">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-start mb-2">
+                        <h5 class="card-title fw-bold text-dark">Consumer Protection</h5>
+                        <span class="badge bg-success">In Force</span>
+                    </div>
+                    <p class="card-text text-muted small">
+                        Protection against defective goods, deficiency of service, misleading advertisements, and unfair trade practices.
+                    </p>
+                    <ul class="list-unstyled small mb-3">
+                        <li><i class="bi bi-book me-1 text-primary"></i> <strong>Consumer Protection Act, 2019</strong></li>
+                        <li class="text-muted"><i class="bi bi-info-circle me-1"></i> Three-tier commissions: District, State, National.</li>
+                    </ul>
+                </div>
+                <div class="card-footer bg-white border-0 pt-0">
+                    <a href="{% url 'ask' %}?area=consumer" class="btn btn-outline-success btn-sm w-100 fw-semibold">Ask Consumer Question</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tenancy Law -->
+        <div class="col-md-4">
+            <div class="card h-100 shadow-sm border-0 border-top border-4 border-warning">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-start mb-2">
+                        <h5 class="card-title fw-bold text-dark">Tenancy &amp; Rent</h5>
+                        <span class="badge bg-warning text-dark">Model Law</span>
+                    </div>
+                    <p class="card-text text-muted small">
+                        Security deposit refunds, tenancy agreements, eviction norms, and maintenance obligations between landlords and tenants.
+                    </p>
+                    <ul class="list-unstyled small mb-3">
+                        <li><i class="bi bi-book me-1 text-primary"></i> <strong>Model Tenancy Act, 2021</strong></li>
+                        <li class="text-danger small"><i class="bi bi-geo-alt me-1"></i> Note: This is a model law; your state's specific rent control law may govern local disputes.</li>
+                    </ul>
+                </div>
+                <div class="card-footer bg-white border-0 pt-0">
+                    <a href="{% url 'ask' %}?area=tenancy" class="btn btn-outline-warning btn-sm w-100 fw-semibold text-dark">Ask Tenancy Question</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Labour & Wages -->
+        <div class="col-md-4">
+            <div class="card h-100 shadow-sm border-0 border-top border-4 border-primary">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-start mb-2">
+                        <h5 class="card-title fw-bold text-dark">Labour &amp; Wages</h5>
+                        <span class="badge bg-primary">Temporal Aware</span>
+                    </div>
+                    <p class="card-text text-muted small">
+                        Timely payment of wages, unauthorized wage deductions, minimum wage rates, and dispute recovery proceedings.
+                    </p>
+                    <ul class="list-unstyled small mb-2">
+                        <li class="text-success"><i class="bi bi-check2-circle me-1"></i> <strong>Code on Wages, 2019</strong> <span class="badge badge-in-force small">In Force (Nov 21, 2025)</span></li>
+                        <li class="text-secondary mt-1"><i class="bi bi-x-circle me-1"></i> Payment of Wages Act, 1936 <span class="badge badge-repealed small">Repealed</span></li>
+                        <li class="text-secondary"><i class="bi bi-x-circle me-1"></i> Minimum Wages Act, 1948 <span class="badge badge-repealed small">Repealed</span></li>
+                    </ul>
+                    <div class="small text-muted fst-italic">
+                        * Automatically detects pre-commencement disputes and alerts citizens.
+                    </div>
+                </div>
+                <div class="card-footer bg-white border-0 pt-0">
+                    <a href="{% url 'ask' %}?area=labour" class="btn btn-outline-primary btn-sm w-100 fw-semibold">Ask Labour Question</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
